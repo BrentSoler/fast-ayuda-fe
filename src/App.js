@@ -1,19 +1,20 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-import { Home, AboutUs, ContactUs } from "./pages/";
-import { Navbar } from "./components";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useParams, useLocation } from "react-router-dom";
+import Layout from "./container/Layout/Layout";
+import { Home, AboutUs, ContactUs, Dashboard } from "./pages/";
 
 const App = () => {
 	return (
 		<Router>
 			<div className="overflow-hidden">
-				<Navbar />
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/about-us" element={<AboutUs />} />
-					<Route path="/contact-us" element={<ContactUs />} />
-				</Routes>
+				<Layout>
+					<Routes>
+						<Route path="/" element={<Home />} />
+						<Route path="/about-us" element={<AboutUs />} />
+						<Route path="/contact-us" element={<ContactUs />} />
+						<Route path="/dashboard" element={<Dashboard />} />
+					</Routes>
+				</Layout>
 			</div>
 		</Router>
 	);
