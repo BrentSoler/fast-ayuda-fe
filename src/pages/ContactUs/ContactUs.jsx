@@ -6,7 +6,7 @@ import { AiFillHome } from "react-icons/ai";
 
 const ContactUs = () => {
 	return (
-		<div className="md:flex justify-center h-[90vh] items-center gap-10">
+		<div className="flex flex-col md:flex-row justify-center h-[90vh] items-center gap-10">
 			<div>
 				<p>Contact Us</p>
 				<p>Fill up the Form and our Team will get back to you within 24 hours</p>
