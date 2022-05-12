@@ -15,3 +15,7 @@
 .btn {
 	@apply px-6 py-2 shadow-md font-pop;
 }
+
+.form-text {
+	@apply flex gap-3 items-center text-gray-500 text-lg;
+}
