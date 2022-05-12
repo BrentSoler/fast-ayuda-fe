@@ -1,5 +1,5 @@
 import Navbar from "./Navbar/Navbar";
-import ContactForm from "./ContactForm/ContactForm";
-import ProgramsTable from "./ProgramsTable/ProgramsTable";
+import ContactForm from "./Forms/ContactForm/ContactForm";
+import ProgramsTable from "./Tables/ProgramsTable/ProgramsTable";
 
 export { Navbar, ContactForm, ProgramsTable };

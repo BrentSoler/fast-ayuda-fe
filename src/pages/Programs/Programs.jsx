@@ -1,5 +1,5 @@
 import React from "react";
-import ProgramsTable from "../../components/ProgramsTable/ProgramsTable";
+import ProgramsTable from "../../components/Tables/ProgramsTable/ProgramsTable";
 
 const Programs = () => {
 	return (

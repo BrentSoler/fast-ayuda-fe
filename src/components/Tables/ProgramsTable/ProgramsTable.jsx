@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
     Table,
     TableBody,
@@ -37,7 +38,9 @@ const rows = [
 const ProgramsTable = () => {
     return (
         <div>
-            <Button variant="contained">ADD PROGRAM</Button>
+            <Link to="/about-us">
+                <Button variant="contained">ADD PROGRAM</Button>
+			</Link>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
