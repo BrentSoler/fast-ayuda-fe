@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navbar {
+	@apply flex list-none p-[min(30vh,20rem)1em] top-0 right-0 fixed flex-col h-full items-start text-xl gap-5 w-[50%]  md:gap-2 md:flex-row md:mr-4 md:relative md:space-x-5 md:text-base md:w-max md:p-0 transition-all;
+}
+
+.arw_btn {
+	@apply text-white hover:text-gray-600 transition-colors h-max absolute;
+}
+
+.btn {
+	@apply px-6 py-2 shadow-md font-pop;
+}
