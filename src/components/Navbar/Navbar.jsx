@@ -14,7 +14,7 @@ const Navbar = (props) => {
 		<div
 			className={`flex justify-between font-pop items-center shadow-md z-40 bg-main text-white ${
 				path && draw ? "w-100% sm:w-[calc(100%-240px)] sm:ml-[240px]" : "w-100%"
-			} transition-all`}
+			} transition-transform`}
 		>
 			{!path && <h1 className="m-4 font-bold text-2xl">FAST-Ayuda</h1>}
 			<Box sx={{ display: { xs: "none", sm: "flex" } }}>
