@@ -44,11 +44,11 @@ const Layout = ({ children }) => {
 							</Toolbar>
 						</Drawer>
 					</Box>
-					<Box sx={{ display: { xs: "absolute", sm: "none" }, zIndex: 39, top: 10 }}>
+					<Box sx={{ display: { xs: "absolute", sm: "none" }, zIndex: 39 }}>
 						<Menu
 							open={drawerOpen}
 							handleClose={() => setDrawerOpen(false)}
-							sx={{ display: { xs: "absolute", sm: "none" }, zIndex: 39, top: -50 }}
+							sx={{ display: { xs: "absolute", sm: "none" }, zIndex: 39, top: "-17rem" }}
 						>
 							<MenuItem>
 								<p>Lorem ipsum dolor</p>
