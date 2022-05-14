@@ -6,7 +6,7 @@ import { Box, IconButton } from "@mui/material";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 
 const Navbar = (props) => {
-	const { path, setDraw, draw, menu } = props;
+	const { path, setDraw, draw, menu, menuUi } = props;
 	const [toggle, toggleFunc] = useToggle();
 
 	return (
@@ -23,11 +23,11 @@ const Navbar = (props) => {
 							className={`ml-4 my-4 font-bold text-2xl text-white`}
 							onClick={(e) => {
 								setDraw(!draw);
-								menu(e);
 							}}
 						>
 							{!draw ? <AiOutlineMenuUnfold /> : <AiOutlineClose />}
 						</IconButton>
+
 						{!draw && <h1 className="my-4 font-bold text-2xl text-white">FAST-Ayuda</h1>}
 					</div>
 				)}
@@ -36,10 +36,12 @@ const Navbar = (props) => {
 				{path && (
 					<div className="flex items-center">
 						<IconButton
-							className="ml-4 my-4 font-bold text-2xl text-white"
-							onClick={() => setDraw(!draw)}
+							className={`ml-4 my-4 font-bold text-2xl text-white`}
+							onClick={(e) => {
+								menu(e);
+							}}
 						>
-							{!draw ? <AiOutlineMenuUnfold /> : <AiOutlineClose />}
+							{!menuUi ? <AiOutlineMenuUnfold /> : <AiOutlineClose />}
 						</IconButton>
 						<h1 className="my-4 font-bold text-2xl text-white">FAST-Ayuda</h1>
 					</div>

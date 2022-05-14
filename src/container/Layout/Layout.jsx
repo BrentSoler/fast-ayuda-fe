@@ -6,6 +6,7 @@ import { Box } from "@mui/system";
 
 const Layout = ({ children }) => {
 	const [drawerOpen, setDrawerOpen] = useState(true);
+	const [menuOpen, setMenuOpen] = useState(false);
 	const [anchor, setAnchor] = useState(null);
 	const location = useLocation();
 	const drawWidth = 220;
@@ -15,13 +16,14 @@ const Layout = ({ children }) => {
 	];
 
 	const handleClick = (event) => {
+		setMenuOpen(!menuOpen);
 		setAnchor(event.currentTarget);
 		console.log(event.currentTarget);
 	};
 
 	const handleClose = () => {
 		setAnchor(null);
-		setDrawerOpen(false);
+		setMenuOpen(false);
 	};
 
 	return (
@@ -32,14 +34,14 @@ const Layout = ({ children }) => {
 						<Menu
 							id="menu-main"
 							anchorEl={anchor}
-							open={drawerOpen}
+							open={menuOpen}
+							onClose={() => handleClose()}
 							transformOrigin={{ vertical: "top", horizontal: "left" }}
 							sx={{
 								display: { xs: "flex", sm: "none" },
 								justifyContent: "flex-end",
-								zIndex: 39,
+								zIndex: 40,
 								position: "absolute",
-								top: "4rem",
 								width: "max",
 								height: "max",
 							}}
@@ -93,13 +95,16 @@ const Layout = ({ children }) => {
 					</Box>
 				</>
 			)}
+
 			<Navbar
 				path={location.pathname.includes("/dashboard")}
 				setDraw={setDrawerOpen}
 				draw={drawerOpen}
 				w={drawWidth}
 				menu={handleClick}
+				menuUi={menuOpen}
 			/>
+
 			{location.pathname.includes("dashboard") && (
 				<>
 					<Box
