@@ -5,37 +5,30 @@ import { DatePicker, DesktopDatePicker, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { usePrograms } from "../../hooks/dataHooks/programs";
-import { usePostTransaction } from "../../hooks/dataHooks/trasactions";
 
-const AppointmentForm = () => {
+const ProgramForm = () => {
 	const { data, isLoading, isError, isSuccess } = usePrograms();
-	const { mutate } = usePostTransaction();
 	const [name, setName] = useState("");
 	const [contact, setContact] = useState("");
 	const [service, setService] = useState("");
 	const [date, setDate] = useState(null);
 	const [time, setTime] = useState(null);
 
+	const transaction = {
+		beneficiary: name,
+		service: contact,
+		date: date,
+		location: "Post Test",
+		time: time,
+		status: "Post Test",
+		ref_number: "Post Test",
+	};
+
 	const handleDropdown = (e) => {
 		setService(e.target.value);
 	};
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-
-		const transaction = {
-			beneficiary: name,
-			service: service,
-			date: date,
-			location: "",
-			contact: contact,
-			time: time,
-			status: "Pending",
-			ref_number: "",
-		};
-
-		mutate(transaction);
-	};
+	const handleSubmit = (e) => {};
 
 	return (
 		<form
@@ -46,8 +39,8 @@ const AppointmentForm = () => {
 			{isError && <p>ERROR</p>}
 			{isSuccess && (
 				<>
-					<TextField label="Name" onChange={(e) => setName(e.target.value)} />
-					<TextField label="Contact" onChange={(e) => setContact(e.target.value)} />
+					<TextField label="Name" />
+					<TextField label="Location" />
 					<FormControl>
 						<InputLabel id="service">Service</InputLabel>
 						<Select labelId="service" label="Service" value={service} onChange={handleDropdown}>
@@ -74,7 +67,7 @@ const AppointmentForm = () => {
 						</LocalizationProvider>
 					</div>
 					<div className="w-full flex justify-end mt-14">
-						<Button sx={{ width: "10rem", alignSelf: "center" }} variant="contained" type="submit">
+						<Button sx={{ width: "10rem", alignSelf: "center" }} variant="contained">
 							Send
 						</Button>
 					</div>
@@ -84,4 +77,4 @@ const AppointmentForm = () => {
 	);
 };
 
-export default AppointmentForm;
+export default ProgramForm;

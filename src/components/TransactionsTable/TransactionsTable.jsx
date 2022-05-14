@@ -10,18 +10,11 @@ import {
 	Button,
 } from "@mui/material";
 import { AiFillPlusCircle } from "react-icons/ai";
-import api from "../../hooks/api";
-import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-
-const fetchTransactions = async () => {
-	const res = api.get("/readtrans");
-
-	return res;
-};
+import { useTransactions } from "../../hooks/dataHooks/trasactions";
 
 const TransactionsTable = () => {
-	const { data, isLoading, isError, isSuccess } = useQuery("transactions", fetchTransactions);
+	const { data, isSuccess, isLoading, isError } = useTransactions();
 
 	return (
 		<div className="flex flex-col gap-3 py-3">
@@ -37,7 +30,7 @@ const TransactionsTable = () => {
 				</Button>
 			</Link>
 			{isLoading && <p>Loading... </p>}
-			{isError && <p>ERROR... </p>}
+			{isError && <p>ERROR</p>}
 			{isSuccess && (
 				<TableContainer component={Paper}>
 					<Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -49,7 +42,7 @@ const TransactionsTable = () => {
 								<TableCell align="right">DATE</TableCell>
 								<TableCell align="right">LOCATION</TableCell>
 								<TableCell align="right">TIME</TableCell>
-								{/* <TableCell align="right">STATUS</TableCell> */}
+								<TableCell align="right">STATUS</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
@@ -66,7 +59,7 @@ const TransactionsTable = () => {
 									<TableCell align="right">{transac.date}</TableCell>
 									<TableCell align="right">{transac.location}</TableCell>
 									<TableCell align="right">{transac.time}</TableCell>
-									{/* <TableCell align="right">{transac.status}</TableCell> */}
+									<TableCell align="right">{transac.status}</TableCell>
 								</TableRow>
 							))}
 						</TableBody>

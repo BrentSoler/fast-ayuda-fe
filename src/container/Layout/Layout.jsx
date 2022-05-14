@@ -77,8 +77,10 @@ const Layout = ({ children }) => {
 											<Link to={`/dashboard${url.path}`}>
 												<p
 													className={`${
-														location.pathname.includes(url.path) ? "border-l-2" : ""
-													} px-3`}
+														location.pathname.includes(url.path)
+															? "border-white"
+															: "border-transparent"
+													} px-3 border-l-2`}
 												>
 													{url.name}
 												</p>

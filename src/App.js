@@ -6,6 +6,8 @@ import Transactions from "./pages/Transactions/Transactions";
 import Programs from "./pages/Programs/Programs";
 import { QueryClient, QueryClientProvider } from "react-query";
 import TransactionForm from "./pages/TransacForm/TransacForm";
+import { ReactQueryDevtools } from "react-query/devtools";
+import ProgramFormPage from "./pages/ProgramFormPage/ProgramFormPage";
 
 const App = () => {
 	const client = new QueryClient();
@@ -19,6 +21,7 @@ const App = () => {
 							<Route path="/about-us" element={<AboutUs />} />
 							<Route path="/contact-us" element={<ContactUs />} />
 							<Route path="/appointment" element={<TransactionForm />} />
+							<Route path="/addprogram" element={<ProgramFormPage />} />
 							<Route path="/dashboard" element={<Dashboard />} />
 							<Route path="/dashboard/programs" element={<Programs />} />
 							<Route path="/dashboard/transactions" element={<Transactions />} />
@@ -26,6 +29,7 @@ const App = () => {
 					</Layout>
 				</div>
 			</Router>
+			<ReactQueryDevtools />
 		</QueryClientProvider>
 	);
 };
