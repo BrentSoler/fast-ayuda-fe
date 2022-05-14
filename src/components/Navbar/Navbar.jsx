@@ -12,7 +12,7 @@ const Navbar = (props) => {
 	return (
 		<div
 			className={`flex justify-between font-pop items-center shadow-md z-40 bg-main text-white ${
-				path && draw ? "w-100% sm:w-[calc(100%-220px)] sm:ml-[220px]" : "w-100%"
+				path && draw ? "w-100% sm:w-[calc(100%-200px)] sm:ml-[200px]" : "w-100%"
 			} transition-transform`}
 		>
 			{!path && <h1 className="m-4 font-bold text-2xl">FAST-Ayuda</h1>}
