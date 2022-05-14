@@ -12,6 +12,7 @@ import {
 import { AiFillPlusCircle } from "react-icons/ai";
 import api from "../../hooks/api";
 import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 
 const fetchTransactions = async () => {
 	const res = api.get("/readtrans");
@@ -24,15 +25,17 @@ const TransactionsTable = () => {
 
 	return (
 		<div className="flex flex-col gap-3 py-3">
-			<Button
-				className="text-white self-end rounded-3xl relative group flex hover:w-[12rem] transition-all gap-3 font-pop"
-				variant="contained"
-			>
-				<AiFillPlusCircle size={30} className="transition-all" />
-				<div className="group-hover:static absolute -translate-x-[100%] group-hover:-translate-x-0 trasition-all w-max">
-					transaction
-				</div>
-			</Button>
+			<Link to="/appointment" className="w-max self-end">
+				<Button
+					className="text-white rounded-3xl relative group flex hover:w-[12rem] transition-all gap-3 font-pop"
+					variant="contained"
+				>
+					<AiFillPlusCircle size={30} className="transition-all" />
+					<div className="group-hover:static absolute -translate-x-[100%] group-hover:-translate-x-0 trasition-all w-max">
+						transaction
+					</div>
+				</Button>
+			</Link>
 			{isLoading && <p>Loading... </p>}
 			{isError && <p>ERROR... </p>}
 			{isSuccess && (

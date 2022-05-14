@@ -2,18 +2,17 @@ import React from "react";
 import { motion } from "framer-motion";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useToggle } from "../../hooks";
-import { useLocation } from "react-router-dom";
 import { Box, IconButton } from "@mui/material";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 
 const Navbar = (props) => {
-	const { path, setDraw, draw } = props;
+	const { path, setDraw, draw, menu } = props;
 	const [toggle, toggleFunc] = useToggle();
 
 	return (
 		<div
 			className={`flex justify-between font-pop items-center shadow-md z-40 bg-main text-white ${
-				path && draw ? "w-100% sm:w-[calc(100%-240px)] sm:ml-[240px]" : "w-100%"
+				path && draw ? "w-100% sm:w-[calc(100%-200px)] sm:ml-[200px]" : "w-100%"
 			} transition-transform`}
 		>
 			{!path && <h1 className="m-4 font-bold text-2xl">FAST-Ayuda</h1>}
@@ -22,7 +21,10 @@ const Navbar = (props) => {
 					<div className="flex items-center">
 						<IconButton
 							className={`ml-4 my-4 font-bold text-2xl text-white`}
-							onClick={() => setDraw(!draw)}
+							onClick={(e) => {
+								setDraw(!draw);
+								menu(e);
+							}}
 						>
 							{!draw ? <AiOutlineMenuUnfold /> : <AiOutlineClose />}
 						</IconButton>

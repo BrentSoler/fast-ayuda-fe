@@ -1,65 +1,93 @@
 import React, { useState } from "react";
 import { Container, Divider, Drawer, List, ListItem, Menu, MenuItem, Toolbar } from "@mui/material";
 import { Navbar } from "../../components";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { Box } from "@mui/system";
 
 const Layout = ({ children }) => {
 	const [drawerOpen, setDrawerOpen] = useState(true);
+	const [anchor, setAnchor] = useState(null);
 	const location = useLocation();
+	const drawWidth = 220;
+	const urls = [
+		{ name: "Programs", path: "/programs" },
+		{ name: "Transactions", path: "/transactions" },
+	];
+
+	const handleClick = (event) => {
+		setAnchor(event.currentTarget);
+		console.log(event.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchor(null);
+		setDrawerOpen(false);
+	};
 
 	return (
-		<div className="flex flex-col relative">
+		<div className="flex flex-col">
 			{location.pathname.includes("dashboard") && (
 				<>
+					<Box sx={{ display: { sm: "none" }, position: "relative", zIndex: 39 }}>
+						<Menu
+							id="menu-main"
+							anchorEl={anchor}
+							open={drawerOpen}
+							transformOrigin={{ vertical: "top", horizontal: "left" }}
+							sx={{
+								display: { xs: "flex", sm: "none" },
+								justifyContent: "flex-end",
+								zIndex: 39,
+								position: "absolute",
+								top: "4rem",
+								width: "max",
+								height: "max",
+							}}
+						>
+							{urls.map((url) => (
+								<Link to={`/dashboard${url.path}`}>
+									<MenuItem>
+										<p
+											className={`${location.pathname.includes(url.path) ? "text-main" : ""} px-3`}
+										>
+											{url.name}
+										</p>
+									</MenuItem>
+								</Link>
+							))}
+						</Menu>
+					</Box>
 					<Box sx={{ display: { xs: "none", sm: "flex" } }}>
 						<Drawer
 							variant="permanent"
-							sx={{ position: "static", width: 240 }}
+							sx={{ position: "static", width: drawWidth }}
 							className={`transition-all ${drawerOpen ? "" : "translate-x-10"}`}
 						>
-							<Toolbar className="bg-main h-full text-white font-pop items-start">
+							<Toolbar
+								className={`bg-main h-full text-white font-pop items-start w-[${drawWidth}px] flex justify-start`}
+							>
 								<List>
 									{drawerOpen && (
-										<p className="py-3 text-xl font-bold border-b-[0.5px] border-blue-300">
+										<p className="py-3 text-xl font-bold border-b-[0.5px] border-blue-300 mb-5">
 											FAST-Ayuda
 										</p>
 									)}
-									<Divider className="mt-5 mb-3">
+									{urls.map((url) => (
 										<ListItem>
-											<p>Lorem ipsum dolor</p>
+											<Link to={`/dashboard${url.path}`}>
+												<p
+													className={`${
+														location.pathname.includes(url.path) ? "border-l-2" : ""
+													} px-3`}
+												>
+													{url.name}
+												</p>
+											</Link>
 										</ListItem>
-									</Divider>
-									<Divider className="mb-3">
-										<ListItem>
-											<p>Lorem ipsum dolor</p>
-										</ListItem>
-									</Divider>
-									<Divider className="mb-3">
-										<ListItem>
-											<p>Lorem ipsum dolor</p>
-										</ListItem>
-									</Divider>
+									))}
 								</List>
 							</Toolbar>
 						</Drawer>
-					</Box>
-					<Box sx={{ display: { xs: "absolute", sm: "none" }, zIndex: 39 }}>
-						<Menu
-							open={drawerOpen}
-							handleClose={() => setDrawerOpen(false)}
-							sx={{ display: { xs: "absolute", sm: "none" }, zIndex: 39, top: "-17rem" }}
-						>
-							<MenuItem>
-								<p>Lorem ipsum dolor</p>
-							</MenuItem>
-							<MenuItem>
-								<p>Lorem ipsum dolor</p>
-							</MenuItem>
-							<MenuItem>
-								<p>Lorem ipsum dolor</p>
-							</MenuItem>
-						</Menu>
 					</Box>
 				</>
 			)}
@@ -67,12 +95,14 @@ const Layout = ({ children }) => {
 				path={location.pathname.includes("/dashboard")}
 				setDraw={setDrawerOpen}
 				draw={drawerOpen}
+				w={drawWidth}
+				menu={handleClick}
 			/>
 			{location.pathname.includes("dashboard") && (
 				<>
 					<Box
 						sx={{ display: { xs: "none", sm: "flex" } }}
-						className={`${drawerOpen ? "ml-[240px]" : ""} mt-5`}
+						className={`${drawerOpen ? `ml-[220px]` : ""} mt-5`}
 					>
 						<Container>{children}</Container>
 					</Box>
