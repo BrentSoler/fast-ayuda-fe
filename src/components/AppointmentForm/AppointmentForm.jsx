@@ -1,23 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TextField from "@mui/material/TextField";
+import { Link } from "react-router-dom";
 import { Button, InputLabel, Select, FormControl, MenuItem } from "@mui/material";
-import { DatePicker, DesktopDatePicker, TimePicker } from "@mui/x-date-pickers";
+import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { usePrograms } from "../../hooks/dataHooks/programs";
 import { usePostTransaction } from "../../hooks/dataHooks/trasactions";
+import { IoIosArrowBack } from "react-icons/io";
+import { useQuery } from "react-query";
+import api from "../../hooks/api";
 
 const AppointmentForm = () => {
+	const [name, setName] = useState("");
+	const [service, setService] = useState("");
+	const [sched, setSched] = useState(null);
 	const { data, isLoading, isError, isSuccess } = usePrograms();
 	const { mutate } = usePostTransaction();
-	const [name, setName] = useState("");
 	const [contact, setContact] = useState("");
-	const [service, setService] = useState("");
+	const [location, setLocation] = useState("");
 	const [date, setDate] = useState(null);
 	const [time, setTime] = useState(null);
+	const isMounted = useRef(false);
 
-	const handleDropdown = (e) => {
+	const handleDropdown = async (e) => {
 		setService(e.target.value);
+		try {
+			const res = await api.get(`/searchsched`, {
+				params: {
+					name: e.target.value,
+				},
+			});
+			setSched(res.data.data);
+		} catch (err) {}
 	};
 
 	const handleSubmit = (e) => {
@@ -27,7 +42,7 @@ const AppointmentForm = () => {
 			beneficiary: name,
 			service: service,
 			date: date,
-			location: "",
+			location: location,
 			contact: contact,
 			time: time,
 			status: "Pending",
@@ -35,6 +50,12 @@ const AppointmentForm = () => {
 		};
 
 		mutate(transaction);
+		setName("");
+		setContact("");
+		setService("");
+		setDate(null);
+		setLocation(null);
+		setTime(null);
 	};
 
 	return (
@@ -46,8 +67,7 @@ const AppointmentForm = () => {
 			{isError && <p>ERROR</p>}
 			{isSuccess && (
 				<>
-					<TextField label="Name" onChange={(e) => setName(e.target.value)} />
-					<TextField label="Contact" onChange={(e) => setContact(e.target.value)} />
+					<TextField label="Name" onChange={(e) => setName(e.target.value)} value={name} />
 					<FormControl>
 						<InputLabel id="service">Service</InputLabel>
 						<Select labelId="service" label="Service" value={service} onChange={handleDropdown}>
@@ -56,15 +76,40 @@ const AppointmentForm = () => {
 							))}
 						</Select>
 					</FormControl>
+					<FormControl>
+						<InputLabel id="location">Location</InputLabel>
+						<Select
+							labelId="location"
+							label="Location"
+							value={location}
+							onChange={(e) => setLocation(e.target.value)}
+						>
+							{sched !== null ? (
+								sched.map((item) => <MenuItem value={item.location}>{item.location}</MenuItem>)
+							) : (
+								<MenuItem></MenuItem>
+							)}
+						</Select>
+					</FormControl>
 					<div className="flex gap-3">
-						<LocalizationProvider dateAdapter={AdapterDateFns}>
-							<DatePicker
+						<FormControl fullWidth>
+							<InputLabel id="date">Date</InputLabel>
+							<Select
+								labelId="date"
 								label="Date"
 								value={date}
-								onChange={(newDate) => setDate(newDate)}
-								renderInput={(e) => <TextField {...e} />}
-								sx={{ display: { xs: "none", sm: "flex" } }}
-							/>
+								onChange={(e) => setDate(e.target.value)}
+							>
+								{sched !== null ? (
+									sched.map((item) => (
+										<MenuItem value={item.start_date}>{item.start_date}</MenuItem>
+									))
+								) : (
+									<MenuItem></MenuItem>
+								)}
+							</Select>
+						</FormControl>
+						<LocalizationProvider dateAdapter={AdapterDateFns}>
 							<TimePicker
 								label="Time"
 								value={time}
@@ -73,7 +118,12 @@ const AppointmentForm = () => {
 							/>
 						</LocalizationProvider>
 					</div>
-					<div className="w-full flex justify-end mt-14">
+					<div className="w-full flex justify-end mt-14 gap-7">
+						<Link to="/dashboard/transactions">
+							<Button variant="text" startIcon={<IoIosArrowBack />}>
+								Go back
+							</Button>
+						</Link>
 						<Button sx={{ width: "10rem", alignSelf: "center" }} variant="contained" type="submit">
 							Send
 						</Button>

@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery, QueryClient, useMutation } from "react-query";
 import api from "../api";
 
 const fetchPrograms = async () => {
@@ -9,7 +9,32 @@ const fetchPrograms = async () => {
 
 export const usePrograms = () => {
 	return useQuery("programs", fetchPrograms, {
-		refetchOnMount: false,
 		refetchOnWindowFocus: false,
+	});
+};
+
+const postProgram = async (prog) => {
+	const resProg = await api.post("/createprog", prog);
+};
+const postSched = async (sched) => {
+	const resSched = await api.post("/createsched", sched);
+};
+
+export const usePostProgram = () => {
+	const queryClient = new QueryClient();
+
+	return useMutation(postProgram, {
+		onSuccess: (prog) => {
+			queryClient.setQueryData("programs", prog);
+		},
+	});
+};
+export const usePostSched = () => {
+	const queryClient = new QueryClient();
+
+	return useMutation(postSched, {
+		onSuccess: (sched) => {
+			queryClient.setQueryData("sched", sched);
+		},
 	});
 };
