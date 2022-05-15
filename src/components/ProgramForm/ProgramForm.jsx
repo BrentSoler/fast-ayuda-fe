@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
-import { Button, InputLabel, Select, FormControl, MenuItem } from "@mui/material";
+import { Button } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { usePostProgram, usePostSched } from "../../hooks/dataHooks/programs";
 
-const ProgramForm = () => {
+const ProgramForm = ({ modal }) => {
 	const [name, setName] = useState("");
 	const [location, setLocation] = useState("");
 	const [type, setType] = useState("");
@@ -19,6 +19,18 @@ const ProgramForm = () => {
 	const [dateEnd, setDateEnd] = useState(null);
 	const { mutate } = usePostProgram();
 	const { mutate: schedmutate } = usePostSched();
+
+	const handleSucces = () => {
+		setName("");
+		setLocation("");
+		setType("");
+		setReqsec("");
+		setProgView("");
+		setDetails("");
+		setDateStart(null);
+		setDateEnd(null);
+		modal(true);
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -39,17 +51,8 @@ const ProgramForm = () => {
 			program_status: "Upcoming",
 		};
 
-		mutate(prog);
+		mutate(prog, handleSucces());
 		schedmutate(sched);
-
-		setName("");
-		setLocation("");
-		setType("");
-		setReqsec("");
-		setProgView("");
-		setDetails("");
-		setDateStart(null);
-		setDateEnd(null);
 	};
 
 	return (

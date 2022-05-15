@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./container/Layout/Layout";
-import { Home, AboutUs, ContactUs, Dashboard } from "./pages/";
+import { Home, ContactUs, Dashboard } from "./pages/";
 import Transactions from "./pages/Transactions/Transactions";
 import Programs from "./pages/Programs/Programs";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -18,7 +18,6 @@ const App = () => {
 					<Layout>
 						<Routes>
 							<Route path="/" element={<Home />} />
-							<Route path="/about-us" element={<AboutUs />} />
 							<Route path="/contact-us" element={<ContactUs />} />
 							<Route path="/appointment" element={<TransactionForm />} />
 							<Route path="/addprogram" element={<ProgramFormPage />} />

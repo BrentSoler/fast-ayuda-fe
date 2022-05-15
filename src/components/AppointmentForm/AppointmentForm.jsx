@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
 import { Button, InputLabel, Select, FormControl, MenuItem } from "@mui/material";
-import { DatePicker, TimePicker } from "@mui/x-date-pickers";
+import { TimePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { usePrograms } from "../../hooks/dataHooks/programs";
 import { usePostTransaction } from "../../hooks/dataHooks/trasactions";
 import { IoIosArrowBack } from "react-icons/io";
-import { useQuery } from "react-query";
 import api from "../../hooks/api";
 
-const AppointmentForm = () => {
+const AppointmentForm = ({ modal }) => {
 	const [name, setName] = useState("");
 	const [service, setService] = useState("");
 	const [sched, setSched] = useState(null);
@@ -21,7 +20,6 @@ const AppointmentForm = () => {
 	const [location, setLocation] = useState("");
 	const [date, setDate] = useState(null);
 	const [time, setTime] = useState(null);
-	const isMounted = useRef(false);
 
 	const handleDropdown = async (e) => {
 		setService(e.target.value);
@@ -33,6 +31,16 @@ const AppointmentForm = () => {
 			});
 			setSched(res.data.data);
 		} catch (err) {}
+	};
+
+	const handleSucces = () => {
+		setName("");
+		setContact("");
+		setService("");
+		setDate(null);
+		setLocation(null);
+		setTime(null);
+		modal(true);
 	};
 
 	const handleSubmit = (e) => {
@@ -49,13 +57,7 @@ const AppointmentForm = () => {
 			ref_number: "",
 		};
 
-		mutate(transaction);
-		setName("");
-		setContact("");
-		setService("");
-		setDate(null);
-		setLocation(null);
-		setTime(null);
+		mutate(transaction, handleSucces());
 	};
 
 	return (
@@ -71,6 +73,7 @@ const AppointmentForm = () => {
 					<FormControl>
 						<InputLabel id="service">Service</InputLabel>
 						<Select labelId="service" label="Service" value={service} onChange={handleDropdown}>
+							<MenuItem></MenuItem>
 							{data.data.data.map((item) => (
 								<MenuItem value={item.name}>{item.name}</MenuItem>
 							))}
@@ -84,6 +87,7 @@ const AppointmentForm = () => {
 							value={location}
 							onChange={(e) => setLocation(e.target.value)}
 						>
+							<MenuItem></MenuItem>
 							{sched !== null ? (
 								sched.map((item) => <MenuItem value={item.location}>{item.location}</MenuItem>)
 							) : (
@@ -100,9 +104,12 @@ const AppointmentForm = () => {
 								value={date}
 								onChange={(e) => setDate(e.target.value)}
 							>
+								<MenuItem></MenuItem>
 								{sched !== null ? (
 									sched.map((item) => (
-										<MenuItem value={item.start_date}>{item.start_date}</MenuItem>
+										<MenuItem value={item.start_date.split(" ")[0]}>
+											{item.start_date.split(" ")[0]}
+										</MenuItem>
 									))
 								) : (
 									<MenuItem></MenuItem>

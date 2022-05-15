@@ -17,7 +17,7 @@ const CarouselOne = ({ pics, interval }) => {
 	}, [visible]);
 
 	return (
-		<div className="group flex gap-3 items-center overflow-hidden w-[100%] h-[15rem] md:h-[25rem] lg:h-[90vh] relative z-10 bg-black">
+		<div className="group flex gap-3 items-center overflow-hidden w-[100%] h-[15rem] md:h-[25rem] lg:h-[90vh] relative z-10 bg-black shadow-lg">
 			<button
 				onClick={() => {
 					handleCarousel(0);
@@ -58,12 +58,7 @@ const CarouselOne = ({ pics, interval }) => {
 			</button>
 
 			<div className="absolute left-28 w-full flex gap-5 bottom-[5rem] transition-all">
-				<Link to="/about-us">
-					<button className="btn border-gray-600 border-2 hover:text-gray-700 hover:border-gray-700 text-gray-600 transition-all font-bold">
-						About Us
-					</button>
-				</Link>
-				<button className="btn bg-gray-600 text-white border-2 border-gray-600 hover:bg-gray-700 transition-all">
+				<button className="btn bg-gray-600 text-white border-2 border-gray-600 hover:bg-gray-700 transition-all hidden md:flex">
 					Get Started
 				</button>
 			</div>

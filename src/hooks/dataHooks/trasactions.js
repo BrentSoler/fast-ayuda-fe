@@ -21,9 +21,9 @@ export const usePostTransaction = () => {
 	const queryClient = new QueryClient();
 
 	return useMutation(postTransac, {
-		onSucces: (transaction) => {
+		onSucces: (transaction, func) => {
 			queryClient.setQueryData("transactions", transaction);
-			console.log(transaction);
+			func();
 		},
 		onError: (err) => {
 			console.log(err.message);

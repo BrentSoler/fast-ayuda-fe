@@ -24,8 +24,9 @@ export const usePostProgram = () => {
 	const queryClient = new QueryClient();
 
 	return useMutation(postProgram, {
-		onSuccess: (prog) => {
+		onSuccess: (prog, func) => {
 			queryClient.setQueryData("programs", prog);
+			func();
 		},
 	});
 };
