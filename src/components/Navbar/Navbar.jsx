@@ -4,8 +4,11 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useToggle } from "../../hooks";
 import { Box, IconButton } from "@mui/material";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { useUserStore } from "../../store/userStore";
 
 const Navbar = (props) => {
+	const isLoggedIn = useUserStore((state) => state.isLoggedIn);
 	const { path, setDraw, draw, menu, menuUi } = props;
 	const [toggle, toggleFunc] = useToggle();
 
@@ -61,9 +64,11 @@ const Navbar = (props) => {
 					!toggle ? "translate-x-full" : "translate-x-0"
 				} md:translate-x-0 md:bg-transparent z-40 text-black md:text-white`}
 			>
-				<li>Item 1</li>
-				<li>Item 2</li>
-				<li>Item 3</li>
+				{!isLoggedIn && (
+					<Link to="/login">
+						<p>Login</p>
+					</Link>
+				)}
 			</div>
 		</div>
 	);

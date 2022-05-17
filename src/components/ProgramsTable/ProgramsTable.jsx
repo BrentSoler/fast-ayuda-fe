@@ -37,7 +37,10 @@ const ProgramsTable = () => {
 			<div className="flex justify-end gap-5 items-center">
 				<TextField
 					label="Search"
-					onChange={(e) => setSearchFilter(e.target.value)}
+					onChange={(e) => {
+						setSearchFilter(e.target.value);
+						console.log(filteredData, searchFilter);
+					}}
 					value={searchFilter}
 				/>
 				<Link to="/addprogram" className="w-max">
@@ -69,10 +72,7 @@ const ProgramsTable = () => {
 						</TableHead>
 						<TableBody>
 							{filteredData.map((prog) => (
-								<TableRow
-									key={prog.name}
-									sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-								>
+								<TableRow key={prog.id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
 									<TableCell>{prog.program_id}</TableCell>
 									<TableCell component="th" scope="row" align="right">
 										{prog.name}

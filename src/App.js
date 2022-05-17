@@ -8,6 +8,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import TransactionForm from "./pages/TransacForm/TransacForm";
 import { ReactQueryDevtools } from "react-query/devtools";
 import ProgramFormPage from "./pages/ProgramFormPage/ProgramFormPage";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import SignUpPage from "./pages/SignupPage/SignupPage";
 
 const App = () => {
 	const client = new QueryClient();
@@ -19,6 +21,8 @@ const App = () => {
 						<Routes>
 							<Route path="/" element={<Home />} />
 							<Route path="/contact-us" element={<ContactUs />} />
+							<Route path="/login" element={<LoginPage />} />
+							<Route path="/signup" element={<SignUpPage />} />
 							<Route path="/appointment" element={<TransactionForm />} />
 							<Route path="/addprogram" element={<ProgramFormPage />} />
 							<Route path="/dashboard" element={<Dashboard />} />

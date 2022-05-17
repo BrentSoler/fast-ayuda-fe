@@ -21,7 +21,7 @@ const Home = () => {
 					We are champions that help for a better future
 				</h1>
 				<p className="w-[min(90%,50rem)] text-center text-lg">
-					Dedicated to the well being - of all people and guided by science and technology,The
+					Dedicated to the well being - of all people and guided by science and technology, The
 					Fast-Ayuda leads and champions global effort to give everyopne, everywhere an equal chance
 					to live an efficient life
 				</p>

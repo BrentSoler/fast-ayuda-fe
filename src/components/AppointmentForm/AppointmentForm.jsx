@@ -64,6 +64,7 @@ const AppointmentForm = ({ modal }) => {
 		<form
 			className="flex flex-col p-5 border-[.2px] gap-4 rounded-md justify-center"
 			onSubmit={(e) => handleSubmit(e)}
+			onClick={() => console.log(data)}
 		>
 			{isLoading && <p>Loading... </p>}
 			{isError && <p>ERROR</p>}
@@ -74,7 +75,7 @@ const AppointmentForm = ({ modal }) => {
 						<InputLabel id="service">Service</InputLabel>
 						<Select labelId="service" label="Service" value={service} onChange={handleDropdown}>
 							<MenuItem></MenuItem>
-							{data.data.data.map((item) => (
+							{data.map((item) => (
 								<MenuItem value={item.name}>{item.name}</MenuItem>
 							))}
 						</Select>
