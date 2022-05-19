@@ -62,7 +62,7 @@ const TransactionsTable = () => {
 						<MenuItem value="Completed">Completed</MenuItem>
 					</Select>
 				</FormControl>
-				<Link to="/appointment" className="w-max">
+				<Link to="/dashboard/appointment" className="w-max">
 					<Button
 						className="text-white rounded-3xl relative group flex hover:w-[12rem] transition-all gap-3 font-pop"
 						variant="contained"

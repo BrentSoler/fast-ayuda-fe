@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 
 const Navbar = (props) => {
-	const isLoggedIn = useUserStore((state) => state.isLoggedIn);
+	const isLoggedIn = useUserStore((state) => state.isLogged);
+	const logout = useUserStore((state) => state.logoutHandler);
 	const { path, setDraw, draw, menu, menuUi } = props;
 	const [toggle, toggleFunc] = useToggle();
 
@@ -18,7 +19,11 @@ const Navbar = (props) => {
 				path && draw ? "w-100% sm:w-[calc(100%-200px)] sm:ml-[200px]" : "w-100%"
 			} transition-transform`}
 		>
-			{!path && <h1 className="m-4 font-bold text-2xl">FAST-Ayuda</h1>}
+			{!path && (
+				<Link to="/">
+					<h1 className="m-4 font-bold text-2xl">FAST-Ayuda</h1>
+				</Link>
+			)}
 			<Box sx={{ display: { xs: "none", sm: "flex" } }}>
 				{path && (
 					<div className="flex items-center">
@@ -65,9 +70,31 @@ const Navbar = (props) => {
 				} md:translate-x-0 md:bg-transparent z-40 text-black md:text-white`}
 			>
 				{!isLoggedIn && (
-					<Link to="/login">
-						<p>Login</p>
-					</Link>
+					<>
+						<Link to="/">
+							<p>Home</p>
+						</Link>
+						<Link to="/login">
+							<p>Login</p>
+						</Link>
+						<Link to="/signup">
+							<p>Signup</p>
+						</Link>
+					</>
+				)}
+				{isLoggedIn && (
+					<>
+						<Link to="/">
+							<p>Home</p>
+						</Link>
+						<Link to="/login">
+							<p>Dashboard</p>
+						</Link>
+
+						<p onClick={() => logout()} className="cursor-pointer">
+							Logout
+						</p>
+					</>
 				)}
 			</div>
 		</div>

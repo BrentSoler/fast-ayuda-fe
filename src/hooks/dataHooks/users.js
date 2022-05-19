@@ -1,5 +1,6 @@
 import { useQuery, QueryClient, useMutation } from "react-query";
 import { useUserStore } from "../../store/userStore";
+import { useNavigate } from "react-router-dom";
 import api from "../api";
 
 const postUser = async ({ user, func }) => {
@@ -28,6 +29,7 @@ const loginUser = async ({ user, func }) => {
 
 export const useLoginUser = () => {
 	const loginHandler = useUserStore((state) => state.logInHandler);
+	const navigate = useNavigate();
 
 	return useMutation(loginUser, {
 		onSuccess: (user) => {
@@ -39,6 +41,7 @@ export const useLoginUser = () => {
 					user.data.last_name,
 					user.data.user_type
 				);
+				navigate("/dashboard");
 			}
 		},
 		onError: (err) => {

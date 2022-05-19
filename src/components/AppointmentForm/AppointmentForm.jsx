@@ -75,7 +75,7 @@ const AppointmentForm = ({ modal }) => {
 						<InputLabel id="service">Service</InputLabel>
 						<Select labelId="service" label="Service" value={service} onChange={handleDropdown}>
 							<MenuItem></MenuItem>
-							{data.map((item) => (
+							{data.data.data.map((item) => (
 								<MenuItem value={item.name}>{item.name}</MenuItem>
 							))}
 						</Select>

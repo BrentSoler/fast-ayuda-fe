@@ -43,7 +43,7 @@ const ProgramsTable = () => {
 					}}
 					value={searchFilter}
 				/>
-				<Link to="/addprogram" className="w-max">
+				<Link to="/dashboard/addprogram" className="w-max">
 					<Button
 						className="text-white self-end rounded-3xl relative group flex hover:w-[9rem] transition-all gap-3 font-pop"
 						variant="contained"

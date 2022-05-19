@@ -16,10 +16,8 @@ const LoginForm = () => {
 		setMobile("");
 		setPassword("");
 		if (!arg) {
-			return setPasswordFail(true);
+			setPasswordFail(true);
 		}
-
-		return navigate("/dashboard");
 	};
 
 	const handleSubmit = (e) => {
