@@ -22,6 +22,7 @@ const SignupForm = ({ modal }) => {
 	const [suffix, setsuffix] = React.useState("");
 	const [gender, setgender] = React.useState("");
 	const [password, setpassword] = React.useState("");
+	const [confirmPassword, setconfirmPassword] = React.useState("");
 	const [email, setemail] = React.useState("");
 	const [mobile_number, setmobile_number] = React.useState("");
 	const [contact_person, setcontact_person] = React.useState("");
@@ -103,6 +104,7 @@ const SignupForm = ({ modal }) => {
 							sx={{ width: "100%" }}
 							value={first_name}
 							onChange={(e) => setfirst_name(e.target.value)}
+							required
 						/>
 						<TextField
 							label="Middle name"
@@ -153,12 +155,21 @@ const SignupForm = ({ modal }) => {
 							value={mobile_number}
 							onChange={(e) => setmobile_number(e.target.value)}
 						/>
+					</div>
+					<div className="flex flex-col items-center justify-between gap-4">
 						<TextField
 							label="Password"
 							type="password"
 							sx={{ width: "100%" }}
 							value={password}
 							onChange={(e) => setpassword(e.target.value)}
+						/>
+						<TextField
+							label="Confirm Password"
+							type="password"
+							sx={{ width: "100%" }}
+							value={confirmPassword}
+							onChange={(e) => setconfirmPassword(e.target.value)}
 						/>
 					</div>
 				</>

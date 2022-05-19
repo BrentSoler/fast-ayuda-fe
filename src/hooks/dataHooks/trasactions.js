@@ -13,17 +13,17 @@ export const useTransactions = () => {
 	});
 };
 
-const postTransac = async (transaction) => {
+const postTransac = async ({ transaction, func }) => {
 	const res = await api.post("/createtrans", transaction);
+	func();
 };
 
 export const usePostTransaction = () => {
 	const queryClient = new QueryClient();
 
 	return useMutation(postTransac, {
-		onSucces: (transaction, func) => {
+		onSucces: (transaction) => {
 			queryClient.setQueryData("transactions", transaction);
-			func();
 		},
 		onError: (err) => {
 			console.log(err.message);

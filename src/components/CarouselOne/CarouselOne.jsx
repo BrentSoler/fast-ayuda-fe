@@ -58,11 +58,12 @@ const CarouselOne = ({ pics, interval }) => {
 			</button>
 
 			<div className="absolute left-28 w-full flex gap-5 bottom-[5rem] transition-all">
-				<button className="btn bg-gray-600 text-white border-2 border-gray-600 hover:bg-gray-700 transition-all hidden md:flex">
-					Get Started
-				</button>
+				<Link to="/signup">
+					<button className="btn bg-gray-600 text-white border-2 border-gray-600 hover:bg-gray-700 transition-all hidden md:flex">
+						Get Started
+					</button>
+				</Link>
 			</div>
-
 			<div className="flex gap-2 absolute bottom-0 opacity-0 transition-all group-hover:opacity-100 w-full justify-center">
 				{pics.map((pics, i) => (
 					<AiOutlineLine

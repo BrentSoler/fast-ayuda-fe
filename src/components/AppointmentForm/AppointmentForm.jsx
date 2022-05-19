@@ -57,7 +57,7 @@ const AppointmentForm = ({ modal }) => {
 			ref_number: "",
 		};
 
-		mutate(transaction, handleSucces());
+		mutate({ transaction: transaction, func: handleSucces() });
 	};
 
 	return (
