@@ -4,9 +4,13 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { useToggle } from "../../hooks";
 import { Box, IconButton } from "@mui/material";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { useUserStore } from "../../store/userStore";
 
 const Navbar = (props) => {
-	const { path, setDraw, draw, menu } = props;
+	const isLoggedIn = useUserStore((state) => state.isLogged);
+	const logout = useUserStore((state) => state.logoutHandler);
+	const { path, setDraw, draw, menu, menuUi } = props;
 	const [toggle, toggleFunc] = useToggle();
 
 	return (
@@ -15,7 +19,11 @@ const Navbar = (props) => {
 				path && draw ? "w-100% sm:w-[calc(100%-200px)] sm:ml-[200px]" : "w-100%"
 			} transition-transform`}
 		>
-			{!path && <h1 className="m-4 font-bold text-2xl">FAST-Ayuda</h1>}
+			{!path && (
+				<Link to="/">
+					<h1 className="m-4 font-bold text-2xl">FAST-Ayuda</h1>
+				</Link>
+			)}
 			<Box sx={{ display: { xs: "none", sm: "flex" } }}>
 				{path && (
 					<div className="flex items-center">
@@ -23,11 +31,11 @@ const Navbar = (props) => {
 							className={`ml-4 my-4 font-bold text-2xl text-white`}
 							onClick={(e) => {
 								setDraw(!draw);
-								menu(e);
 							}}
 						>
 							{!draw ? <AiOutlineMenuUnfold /> : <AiOutlineClose />}
 						</IconButton>
+
 						{!draw && <h1 className="my-4 font-bold text-2xl text-white">FAST-Ayuda</h1>}
 					</div>
 				)}
@@ -36,10 +44,12 @@ const Navbar = (props) => {
 				{path && (
 					<div className="flex items-center">
 						<IconButton
-							className="ml-4 my-4 font-bold text-2xl text-white"
-							onClick={() => setDraw(!draw)}
+							className={`ml-4 my-4 font-bold text-2xl text-white`}
+							onClick={(e) => {
+								menu(e);
+							}}
 						>
-							{!draw ? <AiOutlineMenuUnfold /> : <AiOutlineClose />}
+							{!menuUi ? <AiOutlineMenuUnfold /> : <AiOutlineClose />}
 						</IconButton>
 						<h1 className="my-4 font-bold text-2xl text-white">FAST-Ayuda</h1>
 					</div>
@@ -59,9 +69,33 @@ const Navbar = (props) => {
 					!toggle ? "translate-x-full" : "translate-x-0"
 				} md:translate-x-0 md:bg-transparent z-40 text-black md:text-white`}
 			>
-				<li>Item 1</li>
-				<li>Item 2</li>
-				<li>Item 3</li>
+				{!isLoggedIn && (
+					<>
+						<Link to="/">
+							<p>Home</p>
+						</Link>
+						<Link to="/login">
+							<p>Login</p>
+						</Link>
+						<Link to="/signup">
+							<p>Signup</p>
+						</Link>
+					</>
+				)}
+				{isLoggedIn && (
+					<>
+						<Link to="/">
+							<p>Home</p>
+						</Link>
+						<Link to="/login">
+							<p>Dashboard</p>
+						</Link>
+
+						<p onClick={() => logout()} className="cursor-pointer">
+							Logout
+						</p>
+					</>
+				)}
 			</div>
 		</div>
 	);
