@@ -89,7 +89,7 @@ const AppointmentForm = ({ modal }) => {
 							labelId="service"
 							label="Service"
 							value={service}
-							onChange={(e) => handleDropdown(e)}
+							onChange={(e) => handleDropdown(e, true)}
 						>
 							<MenuItem></MenuItem>
 							{data.data.data.map((item) => (
