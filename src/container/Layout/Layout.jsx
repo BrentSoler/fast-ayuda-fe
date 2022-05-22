@@ -20,6 +20,10 @@ const Layout = ({ children }) => {
 		{ name: "Transactions", path: "/transactions" },
 	]:[
 		{
+			name: "Dashboard",
+			path: "/",
+		},
+		{
 			name: "Programs",
 			path: "/programs",
 		},
