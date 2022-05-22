@@ -14,18 +14,14 @@ const Layout = ({ children }) => {
 	const drawWidth = 220;
 	const urls = type==="User"?[
 		{
-			name: "Programs",
-			path: "/programs",
-		},
-		{
 			name: "Dashboard",
 			path: "/",
 		},
 		{ name: "Transactions", path: "/transactions" },
 	]:[
 		{
-			name: "Dashboard",
-			path: "/",
+			name: "Programs",
+			path: "/programs",
 		},
 		{ name: "Transactions", path: "/transactions" },
 	];
