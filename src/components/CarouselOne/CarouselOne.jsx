@@ -42,7 +42,7 @@ const CarouselOne = ({ pics, interval }) => {
 			</div>
 
 			<div className="absolute flex items-center flex-col w-full font-pop text-white">
-				<h1>Welcome to FAST-Ayuda</h1>
+				<h1>Welcome to E-SKEDYUL</h1>
 				<h1 className="text-5xl font-bold">Take Pinas</h1>
 				<h1 className="text-5xl font-bold">@ new Level</h1>
 			</div>

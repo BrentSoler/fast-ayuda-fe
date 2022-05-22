@@ -9,24 +9,32 @@ import { usePrograms } from "../../hooks/dataHooks/programs";
 import { usePostTransaction } from "../../hooks/dataHooks/trasactions";
 import { IoIosArrowBack } from "react-icons/io";
 import api from "../../hooks/api";
+import { useUserStore } from "../../store/userStore";
+import { useServiceType } from "../../store/userStore";
 
 const AppointmentForm = ({ modal }) => {
-	const [name, setName] = useState("");
 	const [service, setService] = useState("");
+	const serviceType = useServiceType((state) => state.Service);
 	const [sched, setSched] = useState(null);
 	const { data, isLoading, isError, isSuccess } = usePrograms();
+	const name = useUserStore((state) => state.user.first_name);
+	const lname = useUserStore((state) => state.user.last_name);
 	const { mutate } = usePostTransaction();
 	const [contact, setContact] = useState("");
 	const [location, setLocation] = useState("");
 	const [date, setDate] = useState(null);
 	const [time, setTime] = useState(null);
 
-	const handleDropdown = async (e) => {
-		setService(e.target.value);
+	const handleDropdown = async (e, arg) => {
+		if (arg) {
+			setService(e.target.value);
+		} else {
+			setService(e);
+		}
 		try {
 			const res = await api.get(`/searchsched`, {
 				params: {
-					name: e.target.value,
+					name: arg ? e.target.value : e,
 				},
 			});
 			setSched(res.data.data);
@@ -34,7 +42,6 @@ const AppointmentForm = ({ modal }) => {
 	};
 
 	const handleSucces = () => {
-		setName("");
 		setContact("");
 		setService("");
 		setDate(null);
@@ -43,11 +50,16 @@ const AppointmentForm = ({ modal }) => {
 		modal(true);
 	};
 
+	React.useEffect(() => {
+		console.log(serviceType);
+		handleDropdown(serviceType, false);
+	}, []);
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
 		const transaction = {
-			beneficiary: name,
+			beneficiary: name + lname,
 			service: service,
 			date: date,
 			location: location,
@@ -70,10 +82,14 @@ const AppointmentForm = ({ modal }) => {
 			{isError && <p>ERROR</p>}
 			{isSuccess && (
 				<>
-					<TextField label="Name" onChange={(e) => setName(e.target.value)} value={name} />
 					<FormControl>
 						<InputLabel id="service">Service</InputLabel>
-						<Select labelId="service" label="Service" value={service} onChange={handleDropdown}>
+						<Select
+							labelId="service"
+							label="Service"
+							value={service}
+							onChange={(e) => handleDropdown(e)}
+						>
 							<MenuItem></MenuItem>
 							{data.data.data.map((item) => (
 								<MenuItem value={item.name}>{item.name}</MenuItem>

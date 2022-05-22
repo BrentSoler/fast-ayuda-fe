@@ -80,7 +80,7 @@ const SignupForm = ({ modal }) => {
 
 		console.log(steps.length, active);
 
-		mutate(userData, handleSucces());
+		mutate({ user: userData, func: handleSucces });
 	};
 
 	return (

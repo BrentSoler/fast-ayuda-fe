@@ -12,10 +12,10 @@ const SignUpPage = () => {
 				linkBack="/login"
 				state={modal}
 				textHeader="Sucess"
-				textMain="You have Sucessfully Made an account go back and login to FAST-Ayuda!"
+				textMain="You have Sucessfully Made an account go back and login to E-SKEDYUL!"
 			/>
 			<p className="text-4xl text-main font-bold mb-5 text-center">Create An Account</p>
-			<p className="text-center mb-7">Get started on FAST-Ayuda</p>
+			<p className="text-center mb-7">Get started on E-SKEDYUL</p>
 			<SignupForm modal={(state) => setModal(state)} />
 		</div>
 	);

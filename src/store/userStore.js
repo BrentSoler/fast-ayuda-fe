@@ -11,7 +11,7 @@ export const useUserStore = create((set) => ({
 	isLogged: false,
 	logInHandler: (arg, user_id, first_name, last_name, user_type) =>
 		set({
-			userType: user_type === 0 ? "User" : "Admin",
+			userType: user_type == 0 ? "User" : "Admin",
 			user: {
 				user_id: user_id,
 				first_name: first_name,
@@ -30,5 +30,13 @@ export const useUserStore = create((set) => ({
 			},
 			userType: "",
 			isLogged: false,
+		}),
+}));
+
+export const useServiceType = create((set) => ({
+	Service: "",
+	changeHandler: (arg) =>
+		set({
+			Service: arg,
 		}),
 }));

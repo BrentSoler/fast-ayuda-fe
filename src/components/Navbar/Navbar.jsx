@@ -21,7 +21,7 @@ const Navbar = (props) => {
 		>
 			{!path && (
 				<Link to="/">
-					<h1 className="m-4 font-bold text-2xl">FAST-Ayuda</h1>
+					<h1 className="m-4 font-bold text-2xl">E-SKEDYUL</h1>
 				</Link>
 			)}
 			<Box sx={{ display: { xs: "none", sm: "flex" } }}>
@@ -36,7 +36,7 @@ const Navbar = (props) => {
 							{!draw ? <AiOutlineMenuUnfold /> : <AiOutlineClose />}
 						</IconButton>
 
-						{!draw && <h1 className="my-4 font-bold text-2xl text-white">FAST-Ayuda</h1>}
+						{!draw && <h1 className="my-4 font-bold text-2xl text-white">E-SKEDYUL</h1>}
 					</div>
 				)}
 			</Box>
@@ -51,7 +51,7 @@ const Navbar = (props) => {
 						>
 							{!menuUi ? <AiOutlineMenuUnfold /> : <AiOutlineClose />}
 						</IconButton>
-						<h1 className="my-4 font-bold text-2xl text-white">FAST-Ayuda</h1>
+						<h1 className="my-4 font-bold text-2xl text-white">E-SKEDYUL</h1>
 					</div>
 				)}
 			</Box>
@@ -87,10 +87,6 @@ const Navbar = (props) => {
 						<Link to="/">
 							<p>Home</p>
 						</Link>
-						<Link to="/login">
-							<p>Dashboard</p>
-						</Link>
-
 						<p onClick={() => logout()} className="cursor-pointer">
 							Logout
 						</p>

@@ -3,15 +3,20 @@ import { Container, Divider, Drawer, List, ListItem, Menu, MenuItem, Toolbar } f
 import { Navbar } from "../../components";
 import { useLocation, Link } from "react-router-dom";
 import { Box } from "@mui/system";
+import { useUserStore } from "../../store/userStore";
 
 const Layout = ({ children }) => {
 	const [drawerOpen, setDrawerOpen] = useState(true);
+	const type = useUserStore((state) => state.userType);
 	const [menuOpen, setMenuOpen] = useState(false);
 	const [anchor, setAnchor] = useState(null);
 	const location = useLocation();
 	const drawWidth = 220;
 	const urls = [
-		{ name: "Programs", path: "/programs" },
+		{
+			name: type === "Admin" ? "Programs" : "Dashboard",
+			path: type === "Admin" ? "/programs" : "/",
+		},
 		{ name: "Transactions", path: "/transactions" },
 	];
 
@@ -49,9 +54,7 @@ const Layout = ({ children }) => {
 							{urls.map((url) => (
 								<Link to={`/dashboard${url.path}`}>
 									<MenuItem>
-										<p
-											className={`${location.pathname.includes(url.path) ? "text-main" : ""} px-3`}
-										>
+										<p className={`${location.pathname === url.path ? "text-main" : ""} px-3`}>
 											{url.name}
 										</p>
 									</MenuItem>
@@ -71,7 +74,7 @@ const Layout = ({ children }) => {
 								<List>
 									{drawerOpen && (
 										<p className="py-3 text-xl font-bold border-b-[0.5px] border-blue-300 mb-5">
-											FAST-Ayuda
+											E-SKEDYUL
 										</p>
 									)}
 									{urls.map((url) => (
@@ -79,7 +82,7 @@ const Layout = ({ children }) => {
 											<Link to={`/dashboard${url.path}`}>
 												<p
 													className={`${
-														location.pathname.includes(url.path)
+														location.pathname === `dashboard${url.path}`
 															? "border-white"
 															: "border-transparent"
 													} px-3 border-l-2`}

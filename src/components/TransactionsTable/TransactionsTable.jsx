@@ -17,16 +17,22 @@ import {
 import { AiFillPlusCircle } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useTransactions } from "../../hooks/dataHooks/trasactions";
+import { useUserStore } from "../../store/userStore";
 
 const TransactionsTable = () => {
 	const { data, isSuccess, isLoading, isError } = useTransactions();
+	const type = useUserStore((state) => state.userType);
+	const name = useUserStore((state) => state.user.first_name);
+	const lname = useUserStore((state) => state.user.last_name);
 	const [filter, setFilter] = useState("");
 	const [searchFilter, setSearchFilter] = useState("");
 
 	const filteredData = useMemo(() => {
-		const sorted = data?.data.data.filter((d) =>
-			d.status.includes(filter === "None" ? "" : filter)
-		);
+		const nameSort =
+			type === "User"
+				? data?.data.data.filter((d) => d.beneficiary === name + lname)
+				: data?.data.data;
+		const sorted = nameSort?.filter((d) => d.status.includes(filter === "None" ? "" : filter));
 
 		const namesort = sorted?.filter((d) =>
 			d.beneficiary.toLowerCase().includes(searchFilter.toLowerCase())
@@ -39,7 +45,7 @@ const TransactionsTable = () => {
 	}, [filter, data, searchFilter]);
 
 	return (
-		<div className="flex flex-col gap-3 py-3">
+		<div className="flex flex-col gap-3 py-3" onClick={() => console.log(type)}>
 			<div className="flex justify-end gap-5 items-center">
 				<TextField
 					label="Search"
