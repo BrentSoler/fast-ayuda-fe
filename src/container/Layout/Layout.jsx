@@ -12,10 +12,20 @@ const Layout = ({ children }) => {
 	const [anchor, setAnchor] = useState(null);
 	const location = useLocation();
 	const drawWidth = 220;
-	const urls = [
+	const urls = type==="User"?[
 		{
-			name: type === "Admin" ? "Programs" : "Dashboard",
-			path: type === "Admin" ? "/programs" : "/",
+			name: "Programs",
+			path: "/programs",
+		},
+		{
+			name: "Dashboard",
+			path: "/",
+		},
+		{ name: "Transactions", path: "/transactions" },
+	]:[
+		{
+			name: "Dashboard",
+			path: "/",
 		},
 		{ name: "Transactions", path: "/transactions" },
 	];

@@ -51,8 +51,9 @@ const AppointmentForm = ({ modal }) => {
 	};
 
 	React.useEffect(() => {
-		console.log(serviceType);
-		handleDropdown(serviceType, false);
+		if (serviceType != "") {
+			handleDropdown(serviceType, false);
+		}
 	}, []);
 
 	const handleSubmit = (e) => {

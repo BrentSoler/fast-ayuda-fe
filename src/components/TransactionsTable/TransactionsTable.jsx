@@ -45,7 +45,7 @@ const TransactionsTable = () => {
 	}, [filter, data, searchFilter]);
 
 	return (
-		<div className="flex flex-col gap-3 py-3" onClick={() => console.log(type)}>
+		<div className="flex flex-col gap-3 py-3">
 			<div className="flex justify-end gap-5 items-center">
 				<TextField
 					label="Search"
