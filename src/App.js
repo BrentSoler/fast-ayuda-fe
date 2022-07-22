@@ -12,6 +12,9 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUpPage from "./pages/SignupPage/SignupPage";
 import LoginProtection from "./Authentication/ProtectedRoutes/Login";
 import LogoutProtection from "./Authentication/ProtectedRoutes/Logout";
+import ProfilePage from "./pages/ProfilePage";
+import ResidentsPage from "./pages/ResidentsPage";
+import ResidentForm from "./pages/ResidentForm";
 
 const App = () => {
 	const client = new QueryClient();
@@ -22,14 +25,17 @@ const App = () => {
 					<Layout>
 						<Routes>
 							<Route path="/" element={<Home />} />
-							<Route path="/contact-us" element={<ContactUs />} />
 							<Route element={<LogoutProtection />}>
 								<Route path="/login" element={<LoginPage />} />
 								<Route path="/signup" element={<SignUpPage />} />
 							</Route>
 							<Route element={<LoginProtection />}>
+								<Route path="/dashboard/contact-us" element={<ContactUs />} />
+								<Route path="/dashboard/residents" element={<ResidentsPage />} />
 								<Route path="/dashboard/appointment" element={<TransactionForm />} />
 								<Route path="/dashboard/addprogram" element={<ProgramFormPage />} />
+								<Route path="/dashboard/profile" element={<ProfilePage />} />
+								<Route path="/dashboard/profile/edit" element={<ResidentForm />} />
 								<Route path="/dashboard" element={<Dashboard />} />
 								<Route path="/dashboard/programs" element={<Programs />} />
 								<Route path="/dashboard/transactions" element={<Transactions />} />

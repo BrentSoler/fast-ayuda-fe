@@ -14,6 +14,7 @@ const steps = ["Personal Information", "Emergency Contacts", "Address"];
 const SignupForm = ({ modal }) => {
 	const { mutate } = usePostUser();
 	const [active, setActive] = React.useState(0);
+	const [validPass, setValidPass] = React.useState(true);
 
 	const [first_name, setfirst_name] = React.useState("");
 	const [middle_name, setmiddle_name] = React.useState("");
@@ -81,6 +82,32 @@ const SignupForm = ({ modal }) => {
 		console.log(steps.length, active);
 
 		mutate({ user: userData, func: handleSucces });
+	};
+
+	const validator = () => {
+		switch (active) {
+			case 0:
+				return first_name != "" &&
+					middle_name != "" &&
+					gender != "" &&
+					suffix != "" &&
+					birthday &&
+					email != "" &&
+					mobile_number != "" &&
+					password != ""
+					? false
+					: true;
+			case 1:
+				return contact_person != "" && contact_person_number != "" ? false : true;
+			case 2:
+				return street != "" &&
+					barangay != "" &&
+					sector != "" &&
+					unit_number != "" &&
+					lot_and_block_number != ""
+					? false
+					: true;
+		}
 	};
 
 	return (
@@ -162,16 +189,25 @@ const SignupForm = ({ modal }) => {
 							type="password"
 							sx={{ width: "100%" }}
 							value={password}
-							onChange={(e) => setpassword(e.target.value)}
+							onChange={(e) => {
+								setpassword(e.target.value);
+								setValidPass(password === confirmPassword ? true : false);
+							}}
 						/>
 						<TextField
 							label="Confirm Password"
 							type="password"
 							sx={{ width: "100%" }}
 							value={confirmPassword}
-							onChange={(e) => setconfirmPassword(e.target.value)}
+							onChange={(e) => {
+								setconfirmPassword(e.target.value);
+								setValidPass(password === confirmPassword ? true : false);
+							}}
 						/>
 					</div>
+					{validPass && password != "" && (
+						<h1 className="text-red-400 text-center">Passwords Don't Match</h1>
+					)}
 				</>
 			)}
 			{active === 1 && (
@@ -246,8 +282,8 @@ const SignupForm = ({ modal }) => {
 				{active !== steps.length ? (
 					<Button
 						endIcon={<AiOutlineArrowRight />}
-						disabled={active === steps.length}
-						onClick={() => setActive((prev) => prev + 1)}
+						disabled={active === steps.length || validator()}
+						onClick={() => (!validPass ? setActive((prev) => prev + 1) : setActive((prev) => prev))}
 					>
 						Next
 					</Button>

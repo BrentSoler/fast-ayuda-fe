@@ -49,3 +49,44 @@ export const useLoginUser = () => {
 		},
 	});
 };
+
+const fetchUser = async (id) => {
+	const res = await api.get("/readsingle", {
+		params: {
+			user_id: id.queryKey[1],
+		},
+	});
+
+	return res.data;
+};
+
+export const useGetUser = (id) => {
+	return useQuery(["user", id], (id) => fetchUser(id), {
+		refetchOnWindowFocus: false,
+	});
+};
+
+const fetchAllUser = async (id) => {
+	const res = await api.get("/read");
+
+	return res.data;
+};
+export const useGetAllUser = (id) => {
+	return useQuery("users", fetchAllUser, {
+		refetchOnWindowFocus: false,
+	});
+};
+
+const updateUser = async ({ data }) => {
+	const res = await api.put("/update", data);
+};
+
+export const useUpdateUser = () => {
+	const navigate = useNavigate();
+
+	return useMutation(updateUser, {
+		onSuccess: () => {
+			navigate(-1);
+		},
+	});
+};

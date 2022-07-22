@@ -12,23 +12,30 @@ const Layout = ({ children }) => {
 	const [anchor, setAnchor] = useState(null);
 	const location = useLocation();
 	const drawWidth = 220;
-	const urls = type==="User"?[
-		{
-			name: "Programs",
-			path: "/programs",
-		},
-		{
-			name: "Dashboard",
-			path: "/",
-		},
-		{ name: "Transactions", path: "/transactions" },
-	]:[
-		{
-			name: "Dashboard",
-			path: "/",
-		},
-		{ name: "Transactions", path: "/transactions" },
-	];
+	const urls =
+		type !== "User"
+			? [
+					{
+						name: "Dashboard",
+						path: "/",
+					},
+					{ name: "Transactions", path: "/transactions" },
+					{
+						name: "Programs",
+						path: "/programs",
+					},
+					{
+						name: "Residents",
+						path: "/residents",
+					},
+			  ]
+			: [
+					{
+						name: "Dashboard",
+						path: "/",
+					},
+					{ name: "Transactions", path: "/transactions" },
+			  ];
 
 	const handleClick = (event) => {
 		setMenuOpen(!menuOpen);
@@ -59,6 +66,7 @@ const Layout = ({ children }) => {
 								position: "absolute",
 								width: "max",
 								height: "max",
+								position: "relative",
 							}}
 						>
 							{urls.map((url) => (
@@ -79,9 +87,9 @@ const Layout = ({ children }) => {
 							className={`transition-all ${drawerOpen ? "" : "translate-x-10"}`}
 						>
 							<Toolbar
-								className={`bg-main h-full text-white font-pop items-start w-[${drawWidth}px] flex justify-start`}
+								className={`bg-main h-full text-white font-pop items-start w-[${drawWidth}px]`}
 							>
-								<List>
+								<List className="w-full">
 									{drawerOpen && (
 										<p className="py-3 text-xl font-bold border-b-[0.5px] border-blue-300 mb-5">
 											E-SKEDYUL
@@ -102,6 +110,22 @@ const Layout = ({ children }) => {
 											</Link>
 										</ListItem>
 									))}
+									<ListItem className="w-full">
+										<Link to="/dashboard/profile">
+											<p className=" w-full">Profile</p>
+										</Link>
+									</ListItem>
+								</List>
+							</Toolbar>
+							<Toolbar
+								className={`bg-main h-full text-white font-pop items-end w-[${drawWidth}px] font-thin text-sm`}
+							>
+								<List>
+									<ListItem>
+										<Link to="/dashboard/contact-us">
+											<p>Contact Us</p>
+										</Link>
+									</ListItem>
 								</List>
 							</Toolbar>
 						</Drawer>

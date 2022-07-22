@@ -8,7 +8,7 @@ const Dashboard = () => {
 
 	return (
 		<div>
-			Dashboard
+			<h1>Dashboard</h1>
 			<div className="flex gap-3 flex-wrap">
 				{isSuccess &&
 					data.data.data.map((prog) => (

@@ -47,7 +47,8 @@ const LoginForm = () => {
 				<p className="self-center text-sm text-red-500">Wrong Password or Mobile No.</p>
 			)}
 			<div className="flex flex-col mt-5 gap-2 items-center">
-				<Button variant="contained" type="submit">
+				.
+				<Button variant="contained" type="submit" disabled={!mobile}>
 					Login
 				</Button>
 				<Link to="/signup" className="w-max">
