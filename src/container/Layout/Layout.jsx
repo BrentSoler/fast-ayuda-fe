@@ -12,6 +12,7 @@ const Layout = ({ children }) => {
 	const [anchor, setAnchor] = useState(null);
 	const location = useLocation();
 	const drawWidth = 220;
+<<<<<<< HEAD
 	const urls =
 		type !== "User"
 			? [
@@ -36,6 +37,25 @@ const Layout = ({ children }) => {
 					},
 					{ name: "Transactions", path: "/transactions" },
 			  ];
+=======
+	const urls = type==="User"?[
+		{
+			name: "Dashboard",
+			path: "/",
+		},
+		{ name: "Transactions", path: "/transactions" },
+	]:[
+		{
+			name: "Dashboard",
+			path: "/",
+		},
+		{
+			name: "Programs",
+			path: "/programs",
+		},
+		{ name: "Transactions", path: "/transactions" },
+	];
+>>>>>>> 7c9ee6620348af85741c19241a1e452fec9d707e
 
 	const handleClick = (event) => {
 		setMenuOpen(!menuOpen);
