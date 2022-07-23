@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 const ProfilePage = () => {
 	const user = useUserStore((state) => state.user);
 	const { data, isSuccess } = useGetUser(user.user_id);
-
-	console.log(data);
 	return (
 		<div className="flex flex-col justify-center gap-4 h-[80vh] font-pop">
 			<h1 className="self-center font-bold text-5xl font-pop">My Profile</h1>

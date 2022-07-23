@@ -15,6 +15,9 @@ import LogoutProtection from "./Authentication/ProtectedRoutes/Logout";
 import ProfilePage from "./pages/ProfilePage";
 import ResidentsPage from "./pages/ResidentsPage";
 import ResidentForm from "./pages/ResidentForm";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
 	const client = new QueryClient();
@@ -44,6 +47,7 @@ const App = () => {
 					</Layout>
 				</div>
 			</Router>
+			<ToastContainer />
 			<ReactQueryDevtools />
 		</QueryClientProvider>
 	);

@@ -6,10 +6,13 @@ export const useUserStore = create((set) => ({
 		first_name: "",
 		last_name: "",
 		user_type: "",
+		password: "",
 	},
 	userType: "",
+	password: "",
 	isLogged: false,
-	logInHandler: (arg, user_id, first_name, last_name, user_type) =>
+	passwordChange: (password) => set({ password: password }),
+	logInHandler: (arg, user_id, first_name, last_name, user_type, password) =>
 		set({
 			userType: user_type == 0 ? "User" : "Admin",
 			user: {
@@ -17,6 +20,7 @@ export const useUserStore = create((set) => ({
 				first_name: first_name,
 				last_name: last_name,
 				user_type: user_type,
+				password: password,
 			},
 			isLogged: arg,
 		}),

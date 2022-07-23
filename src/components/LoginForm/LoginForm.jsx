@@ -9,8 +9,8 @@ const LoginForm = () => {
 	const [mobile, setMobile] = React.useState("");
 	const [password, setPassword] = React.useState("");
 	const [passwordFail, setPasswordFail] = React.useState(false);
-	const { mutate } = useLoginUser();
-	const navigate = useNavigate();
+	const { mutate } = useLoginUser(password);
+	const passwordChange = useUserStore((state) => state.passwordChange);
 
 	const handleSucces = (arg) => {
 		setMobile("");
@@ -22,6 +22,7 @@ const LoginForm = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault(e);
+		passwordChange(password);
 
 		const user = {
 			mobile_number: mobile,

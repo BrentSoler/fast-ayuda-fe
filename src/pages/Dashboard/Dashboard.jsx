@@ -2,13 +2,15 @@ import React from "react";
 import Default from "../../assets/default.png";
 import DashboardCard from "../../components/DashboardCard/DashboardCard";
 import { usePrograms } from "../../hooks/dataHooks/programs";
+import { useUserStore } from "../../store/userStore";
 
 const Dashboard = () => {
 	const { data, isLoading, isSuccess, isError } = usePrograms();
+	const user = useUserStore((state) => state.user);
 
 	return (
 		<div>
-			<h1>Dashboard</h1>
+			<h1 className="font-pop text-2xl font-bold p-3">Dashboard</h1>
 			<div className="flex gap-3 flex-wrap">
 				{isSuccess &&
 					data.data.data.map((prog) => (

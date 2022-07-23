@@ -1,6 +1,7 @@
 import { useQuery, QueryClient, useMutation } from "react-query";
 import { useUserStore } from "../../store/userStore";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import api from "../api";
 
 const postUser = async ({ user, func }) => {
@@ -24,11 +25,13 @@ const loginUser = async ({ user, func }) => {
 	} else {
 		func(false);
 	}
+	console.log(res);
 	return res;
 };
 
 export const useLoginUser = () => {
 	const loginHandler = useUserStore((state) => state.logInHandler);
+	const password = useUserStore((state) => state.password);
 	const navigate = useNavigate();
 
 	return useMutation(loginUser, {
@@ -39,7 +42,8 @@ export const useLoginUser = () => {
 					user.data.user_id,
 					user.data.first_name,
 					user.data.last_name,
-					user.data.user_type
+					user.data.user_type,
+					password
 				);
 				navigate("/dashboard");
 			}
@@ -78,7 +82,25 @@ export const useGetAllUser = (id) => {
 };
 
 const updateUser = async ({ data }) => {
-	const res = await api.put("/update", data);
+	const Udata = data.userData;
+
+	const res = await api.put("/update", {
+		user_id: Udata.user_id,
+		first_name: Udata.first_name,
+		middle_name: Udata.middle_name,
+		last_name: Udata.last_name,
+		email: Udata.email,
+		password: Udata.password,
+		mobile_number: Udata.mobile_number,
+		gender: Udata.gender,
+		barangay: Udata.barangay,
+		street: Udata.street,
+		unit_number: Udata.unit_number,
+		lot_and_block_number: Udata.lot_and_block_number,
+		birthday: Udata.birthday,
+	});
+
+	console.log(res);
 };
 
 export const useUpdateUser = () => {
@@ -86,6 +108,8 @@ export const useUpdateUser = () => {
 
 	return useMutation(updateUser, {
 		onSuccess: () => {
+			console.log("Noice");
+			toast.success("Successfully updated profile");
 			navigate(-1);
 		},
 	});
