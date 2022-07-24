@@ -34,25 +34,6 @@ const SignupForm = ({ modal }) => {
 	const [street, setstreet] = React.useState("");
 	const [sector, setsector] = React.useState("");
 
-	const handleSucces = () => {
-		setActive(0);
-		setfirst_name("");
-		setmiddle_name("");
-		setlast_name("");
-		setbirthday(null);
-		setsuffix("");
-		setgender("");
-		setpassword("");
-		setemail("");
-		setmobile_number("");
-		setcontact_person("");
-		setbarangay("");
-		setunit_number("");
-		setstreet("");
-		setsector("");
-		modal(true);
-	};
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -81,30 +62,30 @@ const SignupForm = ({ modal }) => {
 
 		console.log(steps.length, active);
 
-		mutate({ user: userData, func: handleSucces });
+		mutate({ user: userData });
 	};
 
 	const validator = () => {
 		switch (active) {
 			case 0:
-				return first_name != "" &&
-					middle_name != "" &&
-					gender != "" &&
-					suffix != "" &&
+				return first_name !== "" &&
+					middle_name !== "" &&
+					gender !== "" &&
+					suffix !== "" &&
 					birthday &&
-					email != "" &&
-					mobile_number != "" &&
-					password != ""
+					email !== "" &&
+					mobile_number !== "" &&
+					password !== ""
 					? false
 					: true;
 			case 1:
-				return contact_person != "" && contact_person_number != "" ? false : true;
+				return contact_person !== "" && contact_person_number !== "" ? false : true;
 			case 2:
-				return street != "" &&
-					barangay != "" &&
-					sector != "" &&
-					unit_number != "" &&
-					lot_and_block_number != ""
+				return street !== "" &&
+					barangay !== "" &&
+					sector !== "" &&
+					unit_number !== "" &&
+					lot_and_block_number !== ""
 					? false
 					: true;
 		}

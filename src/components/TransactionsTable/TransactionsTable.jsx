@@ -28,20 +28,33 @@ const TransactionsTable = () => {
 	const [searchFilter, setSearchFilter] = useState("");
 
 	const filteredData = useMemo(() => {
-		const nameSort =
-			type === "User"
-				? data?.data.data.filter((d) => d.beneficiary === name + lname)
-				: data?.data.data;
-		const sorted = nameSort?.filter((d) => d.status.includes(filter === "None" ? "" : filter));
-
-		const namesort = sorted?.filter((d) =>
-			d.beneficiary.toLowerCase().includes(searchFilter.toLowerCase())
-		);
-		const servesort = sorted?.filter((d) =>
-			d.service.toLowerCase().includes(searchFilter.toLowerCase())
-		);
-
-		return searchFilter === "" ? sorted : [...new Set([...namesort, ...servesort])];
+		if (data !== undefined) {
+			if (data.data.data.message !== "No Request") {
+				const nameSort =
+					type === "User"
+						? data?.data.data.filter((d) => d.beneficiary === name + lname)
+						: data?.data.data;
+				const sorted = nameSort?.filter((d) => d.status.includes(filter === "None" ? "" : filter));
+				const namesort = sorted?.filter((d) =>
+					d.beneficiary.toLowerCase().includes(searchFilter.toLowerCase())
+				);
+				const servesort = sorted?.filter((d) =>
+					d.service.toLowerCase().includes(searchFilter.toLowerCase())
+				);
+				return searchFilter === "" ? sorted : [...new Set([...namesort, ...servesort])];
+			}
+		}
+		return [
+			{
+				transactionId: 0,
+				beneficiary: "No Data",
+				service: "No Data",
+				date: "No Data",
+				location: "No Data",
+				time: "No Data",
+				status: "No Data",
+			},
+		];
 	}, [filter, data, searchFilter]);
 
 	return (

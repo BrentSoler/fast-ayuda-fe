@@ -33,12 +33,14 @@ const App = () => {
 								<Route path="/signup" element={<SignUpPage />} />
 							</Route>
 							<Route element={<LoginProtection />}>
+								<Route path="/dashboard/signup" element={<SignUpPage />} />
 								<Route path="/dashboard/contact-us" element={<ContactUs />} />
 								<Route path="/dashboard/residents" element={<ResidentsPage />} />
 								<Route path="/dashboard/appointment" element={<TransactionForm />} />
 								<Route path="/dashboard/addprogram" element={<ProgramFormPage />} />
 								<Route path="/dashboard/profile" element={<ProfilePage />} />
 								<Route path="/dashboard/profile/edit" element={<ResidentForm />} />
+								<Route path="/dashboard/profile/edit/:id" element={<ResidentForm />} />
 								<Route path="/dashboard" element={<Dashboard />} />
 								<Route path="/dashboard/programs" element={<Programs />} />
 								<Route path="/dashboard/transactions" element={<Transactions />} />
@@ -47,7 +49,7 @@ const App = () => {
 					</Layout>
 				</div>
 			</Router>
-			<ToastContainer />
+			<ToastContainer position="bottom-right" />
 			<ReactQueryDevtools />
 		</QueryClientProvider>
 	);

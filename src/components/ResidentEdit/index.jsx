@@ -8,10 +8,12 @@ import { useGetUser, useUpdateUser } from "../../hooks/dataHooks/users";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const ResidentEdit = () => {
 	const user = useUserStore((state) => state.user);
-	const { data, isSuccess } = useGetUser(user.user_id);
+	const params = useParams();
+	const { data, isSuccess, refetch } = useGetUser(params.id ? params.id : user.user_id);
 	const { mutate } = useUpdateUser();
 	const [isFailed, setIsFailed] = useState(false);
 	const [birthday, setBirthday] = useState();
@@ -22,6 +24,9 @@ const ResidentEdit = () => {
 		email: "",
 		password: "",
 		mobile_number: "",
+		contact_person: "",
+		contact_person_number: "",
+		suffix: "",
 		street: "",
 		gender: "",
 		barangay: "",
@@ -35,6 +40,9 @@ const ResidentEdit = () => {
 		last_name,
 		middle_name,
 		mobile_number,
+		suffix,
+		contact_person_number,
+		contact_person,
 		password,
 		gender,
 		barangay,
@@ -44,6 +52,7 @@ const ResidentEdit = () => {
 	} = formData;
 
 	useEffect(() => {
+		console.log(params);
 		if (isSuccess) {
 			setFormData({
 				first_name: data.first_name,
@@ -51,7 +60,10 @@ const ResidentEdit = () => {
 				middle_name: data.middle_name,
 				email: data.email,
 				mobile_number: data.mobile_number,
+				suffix: data.suffix,
 				password: user.password,
+				contact_person_number: data.contact_person_number,
+				contact_person: data.contact_person,
 				gender: data.gender,
 				barangay: data.barangay,
 				street: data.street,
@@ -60,7 +72,7 @@ const ResidentEdit = () => {
 			});
 			setBirthday(data.birthday);
 		}
-	}, [isSuccess]);
+	}, [isSuccess, data]);
 
 	useEffect(() => {
 		if (isFailed) {
@@ -69,6 +81,10 @@ const ResidentEdit = () => {
 			}, 3000);
 		}
 	}, [isFailed]);
+
+	useEffect(() => {
+		refetch();
+	}, []);
 
 	const onChange = (e) => {
 		setFormData((prevData) => ({
@@ -92,6 +108,9 @@ const ResidentEdit = () => {
 			unit_number === "" ||
 			lot_and_block_number === "" ||
 			street === "" ||
+			suffix === "" ||
+			contact_person_number === "" ||
+			contact_person === "" ||
 			!birthday
 		) {
 			toast.error("Missing Feilds");
@@ -99,13 +118,16 @@ const ResidentEdit = () => {
 		}
 
 		const userData = {
-			user_id: user.user_id,
+			user_id: params ? params.id : user.user_id,
 			first_name: first_name,
 			middle_name: middle_name,
 			last_name: last_name,
 			email: email,
+			suffix: suffix,
 			password: password,
 			mobile_number: mobile_number,
+			contact_person_number: contact_person_number,
+			contact_person: contact_person,
 			gender: gender,
 			barangay: barangay,
 			street: street,
@@ -144,24 +166,47 @@ const ResidentEdit = () => {
 				onChange={onChange}
 			/>
 			<TextField
+				label="Suffix"
+				sx={{ width: "80%" }}
+				name="suffix"
+				value={suffix}
+				onChange={onChange}
+			/>
+			<TextField
 				label="Email"
 				sx={{ width: "80%" }}
 				name="email"
 				value={email}
 				onChange={onChange}
 			/>
-			<TextField
-				label="Password"
-				sx={{ width: "80%" }}
-				name="password"
-				value={password}
-				onChange={onChange}
-			/>
+			{!params.id && (
+				<TextField
+					label="Password"
+					sx={{ width: "80%" }}
+					name="password"
+					value={password}
+					onChange={onChange}
+				/>
+			)}
 			<TextField
 				label="Mobile Number"
 				sx={{ width: "80%" }}
 				name="mobile_number"
 				value={mobile_number}
+				onChange={onChange}
+			/>
+			<TextField
+				label="Contact Person"
+				sx={{ width: "80%" }}
+				name="contact_person"
+				value={contact_person}
+				onChange={onChange}
+			/>
+			<TextField
+				label="Contact Person Number"
+				sx={{ width: "80%" }}
+				name="contact_person_number"
+				value={contact_person_number}
 				onChange={onChange}
 			/>
 			<LocalizationProvider dateAdapter={AdapterDateFns}>

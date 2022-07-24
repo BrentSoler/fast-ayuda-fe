@@ -22,7 +22,6 @@ const LoginForm = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault(e);
-		passwordChange(password);
 
 		const user = {
 			mobile_number: mobile,
@@ -42,13 +41,15 @@ const LoginForm = () => {
 				label="Password"
 				type="password"
 				value={password}
-				onChange={(e) => setPassword(e.target.value)}
+				onChange={(e) => {
+					setPassword(e.target.value);
+					passwordChange(e.target.value);
+				}}
 			/>
 			{passwordFail && (
 				<p className="self-center text-sm text-red-500">Wrong Password or Mobile No.</p>
 			)}
 			<div className="flex flex-col mt-5 gap-2 items-center">
-				.
 				<Button variant="contained" type="submit" disabled={!mobile}>
 					Login
 				</Button>

@@ -1,6 +1,8 @@
 import api from "../api";
 import { useQuery, QueryClient, useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
+import { toast } from "react-toastify";
 
 const fetchTransactions = async () => {
 	const res = await api.get("/readtrans");
@@ -14,17 +16,19 @@ export const useTransactions = () => {
 	});
 };
 
-const postTransac = async ({ transaction, func }) => {
+const postTransac = async ({ transaction }) => {
 	const res = await api.post("/createtrans", transaction);
-	func();
 };
 
 export const usePostTransaction = () => {
 	const queryClient = new QueryClient();
+	const navigate = useNavigate();
 
 	return useMutation(postTransac, {
-		onSucces: (transaction) => {
+		onSuccess: (transaction) => {
+			toast.success("Successfully booked an appoinment");
 			queryClient.setQueryData("transactions", transaction);
+			navigate("/dashboard/transactions");
 		},
 		onError: (err) => {
 			console.log(err.message);

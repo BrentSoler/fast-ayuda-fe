@@ -20,18 +20,6 @@ const ProgramForm = ({ modal }) => {
 	const { mutate } = usePostProgram();
 	const { mutate: schedmutate } = usePostSched();
 
-	const handleSucces = () => {
-		setName("");
-		setLocation("");
-		setType("");
-		setReqsec("");
-		setProgView("");
-		setDetails("");
-		setDateStart(null);
-		setDateEnd(null);
-		modal(true);
-	};
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
@@ -51,7 +39,7 @@ const ProgramForm = ({ modal }) => {
 			program_status: "Upcoming",
 		};
 
-		mutate(prog, handleSucces());
+		mutate(prog);
 		schedmutate(sched);
 	};
 

@@ -1,5 +1,7 @@
 import { useQuery, QueryClient, useMutation } from "react-query";
 import api from "../api";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const fetchPrograms = async () => {
 	const res = await api.get("/readprog");
@@ -22,11 +24,13 @@ const postSched = async (sched) => {
 
 export const usePostProgram = () => {
 	const queryClient = new QueryClient();
+	const navigate = useNavigate();
 
 	return useMutation(postProgram, {
-		onSuccess: (prog, func) => {
+		onSuccess: (prog) => {
 			queryClient.setQueryData("programs", prog);
-			func();
+			toast.success("Successfully made a program");
+			navigate("/dashboard/programs");
 		},
 	});
 };

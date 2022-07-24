@@ -12,7 +12,7 @@ import api from "../../hooks/api";
 import { useUserStore } from "../../store/userStore";
 import { useServiceType } from "../../store/userStore";
 
-const AppointmentForm = ({ modal }) => {
+const AppointmentForm = () => {
 	const [service, setService] = useState("");
 	const serviceType = useServiceType((state) => state.Service);
 	const [sched, setSched] = useState(null);
@@ -41,15 +41,6 @@ const AppointmentForm = ({ modal }) => {
 		} catch (err) {}
 	};
 
-	const handleSucces = () => {
-		setContact("");
-		setService("");
-		setDate(null);
-		setLocation(null);
-		setTime(null);
-		modal(true);
-	};
-
 	React.useEffect(() => {
 		if (serviceType != "") {
 			handleDropdown(serviceType, false);
@@ -70,7 +61,7 @@ const AppointmentForm = ({ modal }) => {
 			ref_number: "",
 		};
 
-		mutate({ transaction: transaction, func: handleSucces() });
+		mutate({ transaction: transaction });
 	};
 
 	return (

@@ -1,17 +1,20 @@
-import { useQuery, QueryClient, useMutation } from "react-query";
+import { useQuery, useMutation, QueryClient } from "react-query";
 import { useUserStore } from "../../store/userStore";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../api";
 
-const postUser = async ({ user, func }) => {
+const postUser = async ({ user }) => {
 	const res = await api.post("/create", user);
-	func();
 };
 
 export const usePostUser = () => {
+	const navigate = useNavigate();
 	return useMutation(postUser, {
-		onSuccess: (user) => {},
+		onSuccess: (user) => {
+			toast.success("Successfully registered");
+			navigate("/login");
+		},
 		onError: (err) => {
 			console.log(err.message);
 		},
@@ -45,6 +48,7 @@ export const useLoginUser = () => {
 					user.data.user_type,
 					password
 				);
+				toast.success("Successfully logged in");
 				navigate("/dashboard");
 			}
 		},
@@ -67,15 +71,16 @@ const fetchUser = async (id) => {
 export const useGetUser = (id) => {
 	return useQuery(["user", id], (id) => fetchUser(id), {
 		refetchOnWindowFocus: false,
+		refetchOnMount: true,
 	});
 };
 
-const fetchAllUser = async (id) => {
+const fetchAllUser = async () => {
 	const res = await api.get("/read");
 
 	return res.data;
 };
-export const useGetAllUser = (id) => {
+export const useGetAllUser = () => {
 	return useQuery("users", fetchAllUser, {
 		refetchOnWindowFocus: false,
 	});
@@ -85,13 +90,16 @@ const updateUser = async ({ data }) => {
 	const Udata = data.userData;
 
 	const res = await api.put("/update", {
-		user_id: Udata.user_id,
+		user_id: parseInt(Udata.user_id),
 		first_name: Udata.first_name,
 		middle_name: Udata.middle_name,
 		last_name: Udata.last_name,
 		email: Udata.email,
 		password: Udata.password,
+		suffix: Udata.suffix,
 		mobile_number: Udata.mobile_number,
+		contact_person_number: Udata.contact_person_number,
+		contact_person: Udata.contact_person,
 		gender: Udata.gender,
 		barangay: Udata.barangay,
 		street: Udata.street,
